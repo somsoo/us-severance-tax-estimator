@@ -1,28 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Severance Tax Calculator 2026 - Under maintenance</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="site-status" content="maintenance">
-<meta name="description" content="This tool is temporarily offline while it is rebuilt.">
+<title>Severance Tax Estimator</title>
+<meta name="description" content="Estimate severance pay taxes, IRS supplemental withholding, and net payout.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://us-severance-tax-estimator.enjoy-onepage.com/">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" href="/favicon.ico">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Severance Tax Estimator">
+<meta property="og:title" content="Severance Tax Estimator">
+<meta property="og:description" content="Estimate severance pay taxes, IRS supplemental withholding, and net payout.">
+<meta property="og:url" content="https://us-severance-tax-estimator.enjoy-onepage.com/">
+<meta property="og:image" content="https://us-severance-tax-estimator.enjoy-onepage.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Severance Tax Estimator">
+<meta name="twitter:description" content="Estimate severance pay taxes, IRS supplemental withholding, and net payout.">
+<meta name="twitter:image" content="https://us-severance-tax-estimator.enjoy-onepage.com/og-image.png">
+<link rel="alternate" type="application/rss+xml" title="Severance Tax RSS" href="https://us-severance-tax-estimator.enjoy-onepage.com/rss.xml">
+<link rel="sitemap" type="application/xml" href="https://us-severance-tax-estimator.enjoy-onepage.com/sitemap.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://us-severance-tax-estimator.enjoy-onepage.com/#webapp",
+      "name": "Severance Tax Estimator",
+      "url": "https://us-severance-tax-estimator.enjoy-onepage.com/",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "inLanguage": "en",
+      "description": "Interactive severance pay tax estimator calculating IRS supplemental withholding, FICA payroll taxes, state tax deductions, and net take-home pay.",
+      "image": "https://us-severance-tax-estimator.enjoy-onepage.com/og-image.png",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://us-severance-tax-estimator.enjoy-onepage.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is severance pay taxed by the IRS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The IRS classifies severance pay as supplemental wages, subjecting it to a mandatory flat 22 percent federal withholding rate up to 1 million dollars."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I have to pay Social Security and Medicare taxes on severance pay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, severance pay is subject to standard FICA taxes including 6.2 percent Social Security up to the annual wage cap and 1.45 percent Medicare tax."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will I get a tax refund if too much was withheld from my severance check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, because flat supplemental withholding rates may exceed your actual effective tax bracket, any excess withholding is refunded when filing your annual federal tax return."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6946654760086847" crossorigin="anonymous"></script>
 <style>
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; }
-  main { max-width: 560px; margin: 12vh auto; padding: 32px 24px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; }
-  h1 { font-size: 1.4rem; margin: 0 0 12px; }
-  p { line-height: 1.6; color: #334155; }
-  a { color: #1d4ed8; font-weight: 600; }
-  .tag { display: inline-block; font-size: .8rem; font-weight: 700; color: #92400e; background: #fef3c7; border-radius: 999px; padding: 4px 10px; margin-bottom: 14px; }
+  :root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 16px;
+  }
+  .app-container {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  header h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 8px;
+  }
+  header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) {
+    .grid-layout { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  input[type="number"], select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #fff;
+    color: var(--text-main);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  input[type="number"]:focus, select:focus {
+    border-color: var(--primary);
+  }
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .summary-banner {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    color: #ffffff;
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .summary-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .summary-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 6px 0;
+  }
+  .summary-sub {
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+  .dual-stat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: #f1f5f9;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .stat-card .v {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .stat-card .l {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .breakdown-table tr {
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .breakdown-table tr:last-child {
+    border-bottom: none;
+  }
+  .breakdown-table td {
+    padding: 10px 0;
+  }
+  .breakdown-table td.k {
+    color: var(--text-muted);
+  }
+  .breakdown-table td.v {
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .info-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .info-section h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-main);
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 640px) {
+    .info-grid { grid-template-columns: 1fr; }
+  }
+  .how-step {
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .how-step .step-num {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .how-step h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .how-step p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .faq-item h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  .faq-item p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  footer {
+    text-align: center;
+    padding: 24px 0 12px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+  footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
-<main>
-  <span class="tag">Under maintenance</span>
-  <h1>Severance Tax Calculator 2026</h1>
-  <p>This tool is temporarily offline. We found that the previous version did not work the way it was described, so we took it down while we rebuild it properly.</p>
-  <p>Please check back later.</p>
-  <p><a href="https://enjoy-onepage.com/">Browse our other free tools</a></p>
-</main>
+
+<div class="app-container">
+  <header>
+    <h1>Severance Tax Estimator</h1>
+    <p>Calculate IRS supplemental wage withholding, FICA payroll deductions, and net severance payout</p>
+  </header>
+
+  <!-- ADSENSE START: top -->
+  <div class="manual-ad-box ad-top-banner" style="width: 100%; max-width: 960px; min-height: 100px; margin: 0 auto 20px; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 100px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="3824727725"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: top -->
+
+  <div class="grid-layout">
+    <!-- Controls Column -->
+    <section class="card">
+      <h2 class="card-title">Severance Package Details</h2>
+
+      <div class="form-group">
+        <label for="severanceAmount">Gross Severance Amount ($)</label>
+        <input type="number" id="severanceAmount" value="35000" min="500" step="500">
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label for="ytdEarnings">Prior YTD Earnings ($)</label>
+          <input type="number" id="ytdEarnings" value="75000" min="0" step="1000">
+        </div>
+        <div class="form-group">
+          <label for="stateRate">State Withholding</label>
+          <select id="stateRate">
+            <option value="ca">California (10.23% Supplemental)</option>
+            <option value="ny">New York (11.70% Supplemental)</option>
+            <option value="nj">New Jersey (9.90% Supplemental)</option>
+            <option value="il">Illinois (4.95% Flat)</option>
+            <option value="none">TX / FL / WA (0% State Tax)</option>
+            <option value="custom" selected>Typical State (5.0% Standard)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label for="customStateTax">State Tax Rate (%)</label>
+          <input type="number" id="customStateTax" value="5.0" min="0" max="15" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="localTax">Local / City Tax (%)</label>
+          <input type="number" id="localTax" value="0.0" min="0" max="10" step="0.1">
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="form-group">
+          <label for="preTaxDeduction">401(k) / Pre-Tax (%)</label>
+          <input type="number" id="preTaxDeduction" value="0.0" min="0" max="50" step="1">
+        </div>
+        <div class="form-group">
+          <label for="filingStatus">Filing Status</label>
+          <select id="filingStatus">
+            <option value="single" selected>Single / Head of Household</option>
+            <option value="married">Married Filing Jointly</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Column -->
+    <section class="card">
+      <h2 class="card-title">Net Payout & Tax Breakdown</h2>
+
+      <div class="summary-banner">
+        <div class="summary-title">Estimated Net Take-Home Payout</div>
+        <div class="summary-value" id="valNetPayout">$22,872.50</div>
+        <div class="summary-sub" id="valTotalTaxPct">Total Tax Withheld: 34.65% ($12,127.50)</div>
+      </div>
+
+      <div class="dual-stat">
+        <div class="stat-card">
+          <div class="v" id="valFedTax">$7,700.00</div>
+          <div class="l">Federal (22% Flat)</div>
+        </div>
+        <div class="stat-card">
+          <div class="v" id="valFicaTax">$2,677.50</div>
+          <div class="l">FICA (SS & Medicare)</div>
+        </div>
+      </div>
+
+      <table class="breakdown-table">
+        <tbody>
+          <tr>
+            <td class="k">Gross Severance Pay:</td>
+            <td class="v" id="valGrossAmount">$35,000.00</td>
+          </tr>
+          <tr>
+            <td class="k">Federal Supplemental Withholding:</td>
+            <td class="v" id="valFedWithholding" style="color: #dc2626;">-$7,700.00</td>
+          </tr>
+          <tr>
+            <td class="k">Social Security Tax (6.2% up to $168.6k):</td>
+            <td class="v" id="valSocialSecurity" style="color: #dc2626;">-$2,170.00</td>
+          </tr>
+          <tr>
+            <td class="k">Medicare Tax (1.45% base):</td>
+            <td class="v" id="valMedicare" style="color: #dc2626;">-$507.50</td>
+          </tr>
+          <tr>
+            <td class="k">State & Local Tax Withholding:</td>
+            <td class="v" id="valStateTax" style="color: #dc2626;">-$1,750.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <!-- ADSENSE START: mid -->
+  <div class="manual-ad-box ad-mid-banner" style="width: 100%; max-width: 960px; min-height: 250px; margin: 20px auto; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 250px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="1186914926"
+         data-ad-format="rectangle,horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: mid -->
+
+  <section class="info-section">
+    <h2>How Severance Taxes Are Calculated</h2>
+    <div class="info-grid">
+      <div class="how-step">
+        <span class="step-num">1</span>
+        <h3>Supplemental Rate</h3>
+        <p>IRS Publication 15 mandates a flat 22% federal supplemental rate on bonuses and severance pay under $1M.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">2</span>
+        <h3>FICA Caps</h3>
+        <p>Social Security taxes stop once combined YTD earnings plus severance exceed the annual $168,600 cap.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">3</span>
+        <h3>Annual Reconciliation</h3>
+        <p>Any over-withholding is returned when you file taxes, reconciling with your actual annual tax bracket.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><h3>How is severance pay taxed by the IRS?</h3><p>The IRS classifies severance pay as supplemental wages, subjecting it to a mandatory flat 22 percent federal withholding rate up to 1 million dollars.</p></div>
+      <div class="faq-item"><h3>Do I have to pay Social Security and Medicare taxes on severance pay?</h3><p>Yes, severance pay is subject to standard FICA taxes including 6.2 percent Social Security up to the annual wage cap and 1.45 percent Medicare tax.</p></div>
+      <div class="faq-item"><h3>Will I get a tax refund if too much was withheld from my severance check?</h3><p>Yes, because flat supplemental withholding rates may exceed your actual effective tax bracket, any excess withholding is refunded when filing your annual federal tax return.</p></div>
+    </div>
+  </section>
+
+  <!-- ADSENSE START: bottom -->
+  <div class="manual-ad-box ad-bottom-banner" style="width: 100%; max-width: 960px; min-height: 280px; margin: 24px auto 16px; text-align: center; background: transparent;">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 280px;"
+         data-ad-client="ca-pub-6946654760086847"
+         data-ad-slot="3416334507"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  <!-- ADSENSE END: bottom -->
+
+  <div id="global-ux-toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <p>&copy; 2026 Severance Tax Estimator. All rights reserved.</p>
+    <p style="margin-top: 8px;">
+      <a href="/privacy.html">Privacy Policy</a> &bull;
+      <a href="/terms.html">Terms of Service</a> &bull;
+      <a href="/disclaimer.html">Disclaimer</a>
+    </p>
+  </footer>
+</div>
+
+<!-- LOGIC START -->
+<script>
+(function() {
+  const severanceAmountEl = document.getElementById('severanceAmount');
+  const ytdEarningsEl = document.getElementById('ytdEarnings');
+  const stateRateEl = document.getElementById('stateRate');
+  const customStateTaxEl = document.getElementById('customStateTax');
+  const localTaxEl = document.getElementById('localTax');
+  const preTaxDeductionEl = document.getElementById('preTaxDeduction');
+  const filingStatusEl = document.getElementById('filingStatus');
+
+  const valNetPayoutEl = document.getElementById('valNetPayout');
+  const valTotalTaxPctEl = document.getElementById('valTotalTaxPct');
+  const valFedTaxEl = document.getElementById('valFedTax');
+  const valFicaTaxEl = document.getElementById('valFicaTax');
+  const valGrossAmountEl = document.getElementById('valGrossAmount');
+  const valFedWithholdingEl = document.getElementById('valFedWithholding');
+  const valSocialSecurityEl = document.getElementById('valSocialSecurity');
+  const valMedicareEl = document.getElementById('valMedicare');
+  const valStateTaxEl = document.getElementById('valStateTax');
+
+  const stateRates = {
+    ca: 10.23,
+    ny: 11.70,
+    nj: 9.90,
+    il: 4.95,
+    none: 0.0,
+    custom: 5.0
+  };
+
+  stateRateEl.addEventListener('change', function() {
+    const r = stateRates[stateRateEl.value];
+    if (r !== undefined) {
+      customStateTaxEl.value = r;
+    }
+    calculate();
+  });
+
+  function calculate() {
+    const gross = Math.max(0, parseFloat(severanceAmountEl.value) || 0);
+    const ytd = Math.max(0, parseFloat(ytdEarningsEl.value) || 0);
+    const statePct = Math.max(0, parseFloat(customStateTaxEl.value) || 0) / 100;
+    const localPct = Math.max(0, parseFloat(localTaxEl.value) || 0) / 100;
+    const preTaxPct = Math.max(0, parseFloat(preTaxDeductionEl.value) || 0) / 100;
+    const isMarried = filingStatusEl.value === 'married';
+
+    const preTaxAmount = gross * preTaxPct;
+    const taxableGross = gross - preTaxAmount;
+
+    // Federal Supplemental Withholding
+    let fedTax = 0;
+    if (taxableGross <= 1000000) {
+      fedTax = taxableGross * 0.22;
+    } else {
+      fedTax = (1000000 * 0.22) + ((taxableGross - 1000000) * 0.37);
+    }
+
+    // FICA - Social Security (Cap $168,600)
+    const ssCap = 168600;
+    let ssTaxable = 0;
+    if (ytd < ssCap) {
+      const roomInCap = ssCap - ytd;
+      ssTaxable = Math.min(gross, roomInCap);
+    }
+    const ssTax = ssTaxable * 0.062;
+
+    // FICA - Medicare (1.45% base + 0.9% additional over $200k/$250k)
+    const medBaseTax = gross * 0.0145;
+    const addlThreshold = isMarried ? 250000 : 200000;
+    let addlMedTax = 0;
+    const totalEarnings = ytd + gross;
+    if (totalEarnings > addlThreshold) {
+      const excess = totalEarnings - addlThreshold;
+      const addlTaxable = Math.min(gross, excess);
+      addlMedTax = addlTaxable * 0.009;
+    }
+    const totalMedicare = medBaseTax + addlMedTax;
+    const totalFica = ssTax + totalMedicare;
+
+    // State & Local Tax
+    const stateTaxAmount = taxableGross * statePct;
+    const localTaxAmount = taxableGross * localPct;
+    const totalStateLocal = stateTaxAmount + localTaxAmount;
+
+    // Total Withholding and Net
+    const totalTaxes = fedTax + totalFica + totalStateLocal;
+    const netPayout = gross - totalTaxes - preTaxAmount;
+    const effectiveWithholdingPct = gross > 0 ? (totalTaxes / gross) * 100 : 0;
+
+    valNetPayoutEl.textContent = '$' + netPayout.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valTotalTaxPctEl.textContent = `Total Tax Withheld: ${effectiveWithholdingPct.toFixed(2)}% ($${totalTaxes.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`;
+
+    valFedTaxEl.textContent = '$' + fedTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valFicaTaxEl.textContent = '$' + totalFica.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    valGrossAmountEl.textContent = '$' + gross.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valFedWithholdingEl.textContent = '-$' + fedTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valSocialSecurityEl.textContent = '-$' + ssTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valMedicareEl.textContent = '-$' + totalMedicare.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    valStateTaxEl.textContent = '-$' + totalStateLocal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  [severanceAmountEl, ytdEarningsEl, stateRateEl, customStateTaxEl, localTaxEl, preTaxDeductionEl, filingStatusEl].forEach(el => {
+    el.addEventListener('input', calculate);
+  });
+
+  calculate();
+})();
+</script>
+<!-- LOGIC END -->
+
 </body>
 </html>
