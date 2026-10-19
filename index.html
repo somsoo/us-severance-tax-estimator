@@ -596,11 +596,11 @@
   });
 
   function calculate() {
-    const gross = Math.max(0, parseFloat(severanceAmountEl.value) || 0);
-    const ytd = Math.max(0, parseFloat(ytdEarningsEl.value) || 0);
-    const statePct = Math.max(0, parseFloat(customStateTaxEl.value) || 0) / 100;
-    const localPct = Math.max(0, parseFloat(localTaxEl.value) || 0) / 100;
-    const preTaxPct = Math.max(0, parseFloat(preTaxDeductionEl.value) || 0) / 100;
+    const gross = Math.max(0, Math.max(0, parseFloat(severanceAmountEl.value) || 0));
+    const ytd = Math.max(0, Math.max(0, parseFloat(ytdEarningsEl.value) || 0));
+    const statePct = Math.max(0, Math.max(0, parseFloat(customStateTaxEl.value) || 0)) / 100;
+    const localPct = Math.max(0, Math.max(0, parseFloat(localTaxEl.value) || 0)) / 100;
+    const preTaxPct = Math.max(0, Math.max(0, parseFloat(preTaxDeductionEl.value) || 0)) / 100;
     const isMarried = filingStatusEl.value === 'married';
 
     const preTaxAmount = gross * preTaxPct;
